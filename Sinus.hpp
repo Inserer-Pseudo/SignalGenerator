@@ -14,11 +14,7 @@
 #include <cmath>
 #include <filesystem>
 #include "Signal.hpp"
-#include "Helper.hpp"
-
-constexpr	unsigned int	defaultNbPoints = 100;	/**< Default number of points : 100	*/
-constexpr	float 			defaulttStart = 0;		/**< Default start time : 0 (sec)	*/
-constexpr	float 			defaulttStop = 1;		/**< Default stop time : 1 (sec)	*/
+//#include "Helper.hpp"
 
 constexpr	float 			defaultA0 = 0;			/**< Default offset */
 constexpr	float 			defaultAmplitude = 1;	/**< Default amplitude */
@@ -32,50 +28,34 @@ class Sinus:public Signal{
 	private:
 		SinusParam Parameters{defaultA0,defaultAmplitude,defaultOmega,defaultPhi0};	/**< 	Signal Parameters 	*/
 
+		virtual	void compute() const noexcept;
+
 	public:
 		Sinus()	= default ;				/**< Default Ctor	*/
-		virtual ~Sinus() = default;	
+		virtual ~Sinus() = default;		/**< Default Dtor	*/
 
-		/**
-		 * 	Constructor with Signal parameters 
-		 * 
-		 * 	@param[in]	Parameter(s) of the sinus signal to create
-		 * 
-		 * 	noexcept : this method throws no exception 
-		 *  explicit : 	the given parameter MUST match the expected
-		 * 				parameter. This avoids unintended concversions.
-		 * 				cf C++ Core Guidelines C.46 
-		 */
 		explicit Sinus(const SinusParam &sParam)noexcept:Parameters{sParam}{};	
 			
-		/**
-		 * 	Constructor with Compute parameters 
-		 * 
-		 * 	@param[in]	Compute Parameter(s) of the sinus signal to create
-		 * 
-		 * 	explicit : 	the given parameter MUST match the expected
-		 * 				parameter. This avoids unintended conversions.
-		 * 				cf C++ Core Guidelines C.46 
-		 * 
-		 * @throw 	std::domain_error("tStart can't be negative.") if the given parameter is negative.
-		 * @throw 	std::overflow_error("tStart can’t be greater or equal than tStop.") if the given parameter is >= than tStop.
-		 * @throw 	std::domain_error("tStop can’t be negative or null.") if the given parameter is negative or nul.
-		 * @throw 	td::invalid_argument("nbPoints must be greater than 0.") if the given parameter is negative or nul.
-		 */	
 		explicit Sinus(const ComputeParameters &cParam):Signal(cParam){};
 		
-		/**
-		 * 	Constructor with both parameters (signal AND compute) 
-		 * 
-		 *  @param[in]	Parameter(s) of the dummy signal to create
-		 * 	@param[in]	Compute Parameter(s) of the dummy signal to create
-		 * 
-		 * @throw 	std::domain_error("tStart can't be negative.") if the given parameter is negative.
-		 * @throw 	std::overflow_error("tStart can’t be greater or equal than tStop.") if the given parameter is >= than tStop.
-		 * @throw 	std::domain_error("tStop can’t be negative or null.") if the given parameter is negative or nul.
-		 * @throw 	td::invalid_argument("nbPoints must be greater than 0.") if the given parameter is negative or nul.
-		 */
 		Sinus(const SinusParam &sParam, const ComputeParameters &cParam):Signal(cParam),Parameters{sParam}{};
+
+
+		[[nodiscard]] float getA0()const noexcept {return this->Parameters.A0;};
+
+		[[nodiscard]] float getAmplitude()const noexcept {return this->Parameters.Amplitude;};
+
+		[[nodiscard]] float getOmega()const noexcept {return this->Parameters.Omega;};
+
+		[[nodiscard]] float getPhi0()const noexcept {return this->Parameters.Phi0;};
+
+		void setA0(float A0) noexcept {this->Parameters.A0 = A0;setNeedToRecompute(true);}; 
+
+		void setAmplitude(float Amplitude) noexcept {this->Parameters.Amplitude = Amplitude;setNeedToRecompute(true);};
+
+		void setOmega(float _Omega){if (_Omega < 0) throw std::domain_error("Omega can’t be negative.") ;this->Parameters.Omega = _Omega;setNeedToRecompute(true);};
+
+		void setPhi0(float Phi0) noexcept {this->Parameters.Phi0 = Phi0;setNeedToRecompute(true);};
 };
 
 #endif	// __SINUS_H__

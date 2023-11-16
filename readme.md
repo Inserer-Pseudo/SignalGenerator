@@ -30,7 +30,6 @@
 				Example : explicit Dummy(const ComputeParameters &param)noexcept:SimulParams{param}{};	
 		c) both parameters
 	
-
 5. Add a private empty compute (virtual) function member : virtual	void	compute() const noexcept;	
 	The class should now compile and becomes instanciable. 
 6. Add the accessors for all the signal parameters. Ensure that an exception is thrown if a constraint isn't respected.

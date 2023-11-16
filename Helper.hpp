@@ -10,6 +10,7 @@
 
 #include <vector>
 #include <stdexcept>
+#include <cmath>
 
 #include "types.h"
 
@@ -121,33 +122,14 @@ class	DummyHelper:public Helper{
 class	SinusHelper:public Helper{
 	private:
 		SinusParam Parameters{};		/**<	Signal (Dummy) parameters. For a Dummy signal, only one : value */
-		/**
-		 * 	getValue()
-		 * 		Accessor (must be private) for the value parameter (inside the DummyParam structure)
-		 * 
-		 * 	const : callable with a const object  
-		 * 	noexcept : this method throws no exception
-		 * 	[[nodiscard]] : the return value should not be discarded (compiler warning)
-		 * 
-		 * 	@return : float, the value of the "value" parameter
-		 **/
-		[[nodiscard]]	float 	getValue() const noexcept {return this->Parameters.value;};
-			 
-		/**
-		 *	compute method
-		 * 		Implementation of the pure virtual method
-		 * 		This is the only computation method
-		 * 
-		 * 	const : callable with a const object  
-		 * 	noexcept : this method throws no exception
-		 * 	[[nodiscard]] : the return value should not be discarded (compiler warning)
-		 * 	
-		 *	@param[in] ComputeParameters &SimulParameters : reference to the simulation parameters (ComputeParameters structure)
-		 * 
-		 * 	@return SignalPoint vector, filled with the calculated data points 
-		 * 
-		 */ 
+	
+		[[nodiscard]]	float 	getA0() const noexcept {return this->Parameters.A0;};
+		[[nodiscard]]	float 	getAmplitude() const noexcept {return this->Parameters.Amplitude;};
+		[[nodiscard]]	float 	getOmega() const noexcept {return this->Parameters.Omega;};
+		[[nodiscard]]	float 	getPhi0() const noexcept {return this->Parameters.Phi0;};
+	
 		[[nodiscard]] virtual	std::vector<SignalPoint> compute(const ComputeParameters &SimulParameters) const noexcept;
+
 	public:
 		/**
 		 * Default constructor (no params) explicitly DELETED - This avoids construction of Dummy Signal without parameter 
