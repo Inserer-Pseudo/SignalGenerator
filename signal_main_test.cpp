@@ -13,17 +13,19 @@
 #define TEST_6
 #define TEST_7 */
 
-#include "Dummy.hpp"
+#include "Sinus.hpp"
 //----------------------------------------------------------------------
 #ifdef TEST_ACCESSEURS
-TEST_CASE("1. Signal Class (virtual) - Concrete class = Dummy - Basic accessors and low-level Signal parameters") {
-	Dummy	myDummy{};
-	float 	testValue{5.0};
+TEST_CASE("1. Signal Class (virtual) - Concrete class = Sinus - Basic accessors and low-level Signal parameters") {
+	Sinus mySinus{};
 	
-	CHECK(myDummy.getValue() == doctest::Approx(DummydefaultValue));
+	float testValue1{1.0};
+	float testValue2{2.0};
+
+	CHECK(mySinus.getA0() == doctest::Approx(testValue1));
 	
-	myDummy.setValue(testValue);
-	CHECK(myDummy.getValue() == doctest::Approx(testValue));
+	mySinus.setA0(2.0);
+	CHECK(mySinus.getA0() == doctest::Approx(testValue2));
 }
 #endif
 //----------------------------------------------------------------------

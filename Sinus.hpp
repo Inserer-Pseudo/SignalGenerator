@@ -14,7 +14,7 @@
 #include <cmath>
 #include <filesystem>
 #include "Signal.hpp"
-//#include "Helper.hpp"
+#include "Helper.hpp"
 
 constexpr	float 			defaultA0 = 0;			/**< Default offset */
 constexpr	float 			defaultAmplitude = 1;	/**< Default amplitude */

@@ -38,7 +38,7 @@ class Signal{
 		 * 	const : callable with a const object  
 		 * 	noexcept : this method throws no exception
 		 */
-		virtual	void	compute() const noexcept = 0;
+		virtual	void compute() const noexcept = 0;
 		
 	protected:
 		mutable std::vector<SignalPoint>	tabSignal{};	/**< Vector containing the signal data (points)	- mutable because needs to be calculated, even with const objects	*/
