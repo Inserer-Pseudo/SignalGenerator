@@ -6,6 +6,7 @@
 
 # Ignore generated files
 *.out
+*.data
 
 # Ignore build directories
 build/
