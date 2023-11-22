@@ -1,4 +1,6 @@
-// Main.cpp
+// To compile the project :
+// g++ -std=c++20 Helper.cpp Signal.cpp Sinus.cpp Main.cpp -o Sinus.out
+
 #include <iostream>
 #include "Sinus.hpp"
 
