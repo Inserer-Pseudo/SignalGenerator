@@ -1,7 +1,7 @@
 /**
  *	@file	Sinus.hpp
  * 	@brief 	Sinus class
- * 	@author	Benjamin
+ * 	@author	mathis
  * 	@date	2023-11
  * 
  */
@@ -14,7 +14,7 @@
 #include <cmath>
 #include <filesystem>
 #include "Signal.hpp"
-//#include "Helper.hpp"
+#include "Helper.hpp"
 
 constexpr	float 			defaultA0 = 0;			/**< Default offset */
 constexpr	float 			defaultAmplitude = 1;	/**< Default amplitude */
@@ -40,21 +40,18 @@ class Sinus:public Signal{
 		
 		Sinus(const SinusParam &sParam, const ComputeParameters &cParam):Signal(cParam),Parameters{sParam}{};
 
+		/* Gestion des getters */
 
 		[[nodiscard]] float getA0()const noexcept {return this->Parameters.A0;};
-
 		[[nodiscard]] float getAmplitude()const noexcept {return this->Parameters.Amplitude;};
-
 		[[nodiscard]] float getOmega()const noexcept {return this->Parameters.Omega;};
-
 		[[nodiscard]] float getPhi0()const noexcept {return this->Parameters.Phi0;};
 
+		/* Gestion des setters */
+		
 		void setA0(float A0) noexcept {this->Parameters.A0 = A0;setNeedToRecompute(true);}; 
-
 		void setAmplitude(float Amplitude) noexcept {this->Parameters.Amplitude = Amplitude;setNeedToRecompute(true);};
-
 		void setOmega(float _Omega){if (_Omega < 0) throw std::domain_error("Omega can’t be negative.") ;this->Parameters.Omega = _Omega;setNeedToRecompute(true);};
-
 		void setPhi0(float Phi0) noexcept {this->Parameters.Phi0 = Phi0;setNeedToRecompute(true);};
 };
 
