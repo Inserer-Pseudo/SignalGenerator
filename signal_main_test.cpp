@@ -6,12 +6,13 @@
 //----------------------------------------------------------------------
 
 #define TEST_ACCESSEURS
-/* #define TEST_2
+#define TEST_2
 #define TEST_3
-#define TEST_4
-#define TEST_5
-#define TEST_6
-#define TEST_7 */
+// #define TEST_3bis
+// #define TEST_4
+// #define TEST_5
+// #define TEST_6
+// #define TEST_7
 
 #include "Sinus.hpp"
 //----------------------------------------------------------------------
@@ -19,28 +20,31 @@
 TEST_CASE("1. Signal Class (virtual) - Concrete class = Sinus - Basic accessors and low-level Signal parameters") {
 	Sinus mySinus{};
 	
-	float testValue1{1.0};
 	float testValue2{2.0};
 
-	CHECK(mySinus.getA0() == doctest::Approx(testValue1));
+	CHECK(mySinus.getA0() == doctest::Approx(defaultA0));
 	
 	mySinus.setA0(2.0);
 	CHECK(mySinus.getA0() == doctest::Approx(testValue2));
+
 }
 #endif
 //----------------------------------------------------------------------
 #ifdef TEST_2
 TEST_CASE("2. Signal Class (virtual) - Concrete class = Dummy / default value / non const obj - generate function") {
-	Dummy	myDummy{};
+	Sinus	mySinus{};
 		
-	REQUIRE(myDummy.getValue() == doctest::Approx(DummydefaultValue));
+	REQUIRE(mySinus.getA0() == doctest::Approx(defaultA0));
+	REQUIRE(mySinus.getAmplitude() == doctest::Approx(defaultAmplitude));
+	REQUIRE(mySinus.getOmega() == doctest::Approx(defaultOmega));
+	REQUIRE(mySinus.getPhi0() == doctest::Approx(defaultPhi0));
 	
 	std::string_view	FileName{defaultFileName};
 	std::filesystem::remove(FileName);
 	REQUIRE(std::filesystem::exists(FileName) == false);
-	unsigned int 		expectedSize{1800};
+	unsigned int expectedSize{1849};
 	
-	unsigned int FileSize = myDummy.generate();
+	unsigned int FileSize = mySinus.generate();
 	
 	CHECK(FileSize == expectedSize);
 	CHECK(std::filesystem::exists(FileName) == true);
@@ -50,6 +54,30 @@ TEST_CASE("2. Signal Class (virtual) - Concrete class = Dummy / default value / 
 #endif
 //----------------------------------------------------------------------
 #ifdef TEST_3
+TEST_CASE("3. Signal Class (virtual) - Test du constructeurs parametrique") {
+	Sinus	mySinus{};
+
+	mySinus.setA0(1.5);
+	mySinus.setAmplitude(3.0);
+	mySinus.setOmega(2.0);
+	mySinus.setPhi0(1.0);
+	CHECK(mySinus.getA0() == doctest::Approx(1.5));
+	CHECK(mySinus.getAmplitude() == doctest::Approx(3.0));
+	CHECK(mySinus.getOmega() == doctest::Approx(2.0));
+	CHECK(mySinus.getPhi0() == doctest::Approx(1.0));
+	
+	SinusParam Parameters{1.5,3.0,2.0,1.0};	/**< 	Signal Parameters 	*/
+
+	Sinus mySinus2{Parameters};
+
+	CHECK(mySinus2.getA0() == doctest::Approx(1.5));
+	CHECK(mySinus2.getAmplitude() == doctest::Approx(3.0));
+	CHECK(mySinus2.getOmega() == doctest::Approx(2.0));
+	CHECK(mySinus2.getPhi0() == doctest::Approx(1.0));
+}
+#endif
+//----------------------------------------------------------------------
+#ifdef TEST_3bis
 TEST_CASE("3. Signal Class (virtual) - Concrete class = Dummy / default value / const obj - generate function") {
 	const Dummy		myDummy{};
 		

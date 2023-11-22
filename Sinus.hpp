@@ -40,7 +40,6 @@ class Sinus:public Signal{
 		
 		Sinus(const SinusParam &sParam, const ComputeParameters &cParam):Signal(cParam),Parameters{sParam}{};
 
-
 		[[nodiscard]] float getA0()const noexcept {return this->Parameters.A0;};
 
 		[[nodiscard]] float getAmplitude()const noexcept {return this->Parameters.Amplitude;};

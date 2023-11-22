@@ -2,7 +2,12 @@
 #include "Helper.hpp"
 #include "Sinus.hpp"
 
-void Sinus::compute() const noexcept{}
+void Sinus::compute() const noexcept{
+    // Creates Helper, then calls the do_compute method
+	SinusHelper myHelper{this->Parameters};
+	
+	this->tabSignal = myHelper.do_compute(this->SimulParams);
+}
 // //----------------------------------------------------------------------
 // Sinus::Sinus(const SinusParam &SinusParameters, const ComputeParameters &SimulParameters):SimulParams{SimulParameters},Parameters{SinusParameters}{
 // 	if ( this->getOmega() < 0) throw std::domain_error("Omega can’t be negative.") ;
