@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "Sinus.hpp"
+#include "Noise.hpp"
 
 const float SinusA0 = 1.5;
 const float SinusAmplitude = 3.0;
@@ -20,7 +21,11 @@ int main(int argc, char** argv) {
 
 	Sinus mySinus{sParam, cParam};  
 
-    unsigned int FileSize = mySinus.generate();
+    //unsigned int FileSize = mySinus.generate();
+
+    Noise myNoise{cParam};
+
+    unsigned int FileSize2 = myNoise.generate();
 
     return 0;
 }

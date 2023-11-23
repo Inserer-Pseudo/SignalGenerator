@@ -44,31 +44,29 @@ std::vector<SignalPoint> SinusHelper::compute(const ComputeParameters &SimulPara
 	return locSignal;
 }
 
-// std::vector<SignalPoint> SinusComputeHelper::Compute(const SinusParam &SinusParameters, const ComputeParameters &SimulParameters) const noexcept{
-	
-	
-// 	float 	dt;		/**< Simulation Step		*/
-// 	dt = (SimulParameters.tStop - SimulParameters.tStart) / static_cast<float>(SimulParameters.nbPoints);
-	
-// 	std::vector<SignalPoint> Res{};
-// 	SignalPoint	locSP{};
-// 	float 	realt;
-// 	float 	tmp;
-// 	for (unsigned int t = 0 ; t < SimulParameters.nbPoints ; ++t){
-// 		realt = SimulParameters.tStart + t * dt;
-// 		locSP.tn=realt;
-		
-// 		tmp = (SinusParameters.Omega * realt) + SinusParameters.Phi0;
-// 		tmp = sin(tmp);
-// 		tmp *= SinusParameters.Amplitude;
-// 		tmp += SinusParameters.A0;
-// 		locSP.sig_tn = tmp;
-		
-// 		Res.push_back(locSP);
-// 	} 
-	
-// 	return Res;
-// }	
 //----------------------------------------------------------------------
-//----------------------------------------------------------------------
+std::vector<SignalPoint> NoiseHelper::compute(const ComputeParameters &SimulParameters) const noexcept{
+	std::vector<SignalPoint> locSignal{};
+	SignalPoint	Point{};
+	
+	float 	dt = (SimulParameters.tStop - SimulParameters.tStart) / static_cast<float>(SimulParameters.nbPoints);	/**< Simulation Step		*/
+	float 	tmp;
 
+    const double mean = this->Parameters.A0;
+    const double stddev = 0.1;
+    std::default_random_engine generator;
+    std::normal_distribution<double> dist(mean, stddev);
+
+	for (unsigned int t=0 ; t < SimulParameters.nbPoints ; ++t){
+		Point.tn = SimulParameters.tStart + (static_cast<float>(t) * dt);
+
+		tmp = this->Parameters.A0;
+		tmp += dist(generator);
+		tmp *= this->Parameters.Amplitude;
+		Point.sig_tn = tmp;
+
+		locSignal.push_back(Point);
+	}
+		
+	return locSignal;
+}

@@ -11,6 +11,7 @@
 #include <vector>
 #include <stdexcept>
 #include <cmath>
+#include <random>
 
 #include "types.h"
 
@@ -147,6 +148,39 @@ class	SinusHelper:public Helper{
 		 * 	@param[in] SinusParam &Params :  Reference to a Dummy Signal parameter (DummyParam) structure.
 		 */
 		explicit SinusHelper(const SinusParam &Params):Parameters{Params}{};
+};
+
+/**
+ * Class NoiseHelper
+ * 
+ * 	Concrete class - implements the Helper Interface 
+ */
+class	NoiseHelper:public Helper{
+	private:
+		NoiseParam Parameters{};		/**<	Signal (Dummy) parameters. For a Dummy signal, only one : value */
+	
+		[[nodiscard]]	float 	getA0() const noexcept {return this->Parameters.A0;};
+		[[nodiscard]]	float 	getAmplitude() const noexcept {return this->Parameters.Amplitude;};
+	
+		[[nodiscard]] virtual	std::vector<SignalPoint> compute(const ComputeParameters &SimulParameters) const noexcept;
+
+	public:
+		/**
+		 * Default constructor (no params) explicitly DELETED - This avoids construction of Dummy Signal without parameter 
+		 * Default destructor
+		 */
+		NoiseHelper() = delete;	
+		virtual ~NoiseHelper() = default;
+		
+		/**
+		 * 	Contructor with parameter
+		 * 
+		 *	explicit : Force to use explicitly a DummyParam typed parameter. Avoids implicit conversions between types 
+		 * 				cf C++ Core Guidelines C.46 
+		 * 
+		 * 	@param[in] NoiseParam &Params :  Reference to a Dummy Signal parameter (DummyParam) structure.
+		 */
+		explicit NoiseHelper(const NoiseParam &Params):Parameters{Params}{};
 };
 
 
