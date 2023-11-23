@@ -53,7 +53,11 @@ struct	SinusParam{
 		float 	Phi0;						/**<  Phase at t=0		*/
 	};
 
+struct NoiseParam{
 
+	float A0;
+	float EcartType;
+	float Amplitude;
+
+};
 #endif	/* __TYPES_H__ */
-
-

@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Sinus.hpp"
+#include "Noise.hpp"
 
 const float SinusA0 = 2.5;
 const float SinusAmplitude = 2;
@@ -13,14 +14,23 @@ unsigned int	simulnbPoints = 10000;	/**< Simulation step. Defined by (tStop - tS
 
 int main(){
 
+/*
     SinusParam ParamBigSinus{SinusA0,SinusAmplitude,SinusOmega,SinusPhi0};
 	
 
     ComputeParameters BigSinusComputParam{ simultStart, simultStop, simulnbPoints};
 
+ 
     Sinus BigSinus{ParamBigSinus,BigSinusComputParam};
 
     unsigned int FileSize = BigSinus.generate();
+*/
+    NoiseParam ParamNoise{SinusA0,SinusAmplitude,2};
+    ComputeParameters BigNoiseComputParam{ simultStart, simultStop, simulnbPoints};
+
+    Noise Mynoise{ParamNoise,BigNoiseComputParam};
+
+    unsigned int FileSize = Mynoise.generate();
 
 }
 
