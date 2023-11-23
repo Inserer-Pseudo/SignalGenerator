@@ -41,7 +41,7 @@ struct	DummyParam{
 };
 
 /**
- *	Type SinusParam : Signal caractéristics
+ *	Type SinusParam : Signal caracteristics
  * 
  *    	sin_tn(tn) = A0 + amplitude * sin(omega*tn + phi0)
  */
@@ -51,6 +51,17 @@ struct	SinusParam{
 		float 	Amplitude;					/**<  Amplitude		*/
 		float 	Omega;						/**<  Angular frequency  (rad.s-1) */
 		float 	Phi0;						/**<  Phase at t=0		*/
+	};
+
+/**
+ *	Type NoiseParam : Signal caracteristics
+ * 
+ *    	noise_tn(tn) = A0 + amplitude
+ */
+struct	NoiseParam{
+		// 
+		float 	A0;							/**<  Offset			*/
+		float 	Amplitude;					/**<  Amplitude		*/
 	};
 
 
