@@ -60,7 +60,7 @@ std::vector<SignalPoint> NoiseHelper::compute(const ComputeParameters &SimulPara
 	for (unsigned int t=0 ; t < SimulParameters.nbPoints ; ++t){
 		Point.tn = SimulParameters.tStart + (static_cast<float>(t) * dt);
 
-		tmp = 0.0;
+		tmp = this->Parameters.A0;
 		tmp += dist(generator);
 		tmp *= this->Parameters.Amplitude;
 		Point.sig_tn = tmp;
